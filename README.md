@@ -7,14 +7,11 @@ Ilham Insan Wafi (5025211255)
 
 ## LAPORAN RESMI
 
-### Topologi GNS & Pembagian Subnet VLSM
-![bagi](img/topofix.png)
-
 ### Prefix IP
 Prefix IP : 10.48.x.x
 
 ### Rute
-![bagi](img/subnet.png)
+![bagi](img/rute.png)
 
 ### Pembagian IP
 ![bagi](img/ipvlsm.png)
