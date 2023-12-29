@@ -325,19 +325,32 @@ iptables -A INPUT -p tcp --dport 22 -s 10.48.4.5 -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -j DROP
 ```
 
-# SOAL 5
+### SOAL 5
 Selain itu, akses menuju WebServer hanya diperbolehkan saat jam kerja yaitu Senin-Jumat pada pukul 08.00-16.00.
 ```
 iptables -A INPUT -m time --timestart 08:00 --timestop 16:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
 iptables -A INPUT -j REJECT
 ```
 
-# SOAL 6
+### SOAL 6
 Lalu, karena ternyata terdapat beberapa waktu di mana network administrator dari WebServer tidak bisa stand by, sehingga perlu ditambahkan rule bahwa akses pada hari Senin - Kamis pada jam 12.00 - 13.00 dilarang (istirahat maksi cuy) dan akses di hari Jumat pada jam 11.00 - 13.00 juga dilarang (maklum, Jumatan rek).
 ```
 iptables -I INPUT 3 -m time --timestart 12:00 --timestop 13:00 --weekdays Mon,Tue,Wed,Thu -j REJECT
 iptables -I INPUT 4 -m time --timestart 11:00 --timestop 13:00 --weekdays Fri -j REJECT
 ```
 
-# SOAL 7
+### SOAL 8
+```
+iptables -A INPUT -p tcp --dport 80 -s 10.48.0.20/30 -m time --datestart 2023-12-10 --datestop 2024-02-15 -j DROP
+```
 
+### SOAL 9
+```
+iptables -N portscan
+
+iptables -A INPUT -m recent --name portscan --update --seconds 600 --hitcount 20 -j DROP
+iptables -A FORWARD -m recent --name portscan --update --seconds 600 --hitcount 20 -j DROP
+
+iptables -A INPUT -m recent --name portscan --set -j ACCEPT
+iptables -A FORWARD -m recent --name portscan --set -j ACCEPT
+```
